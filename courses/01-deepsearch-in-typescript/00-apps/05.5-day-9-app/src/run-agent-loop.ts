@@ -1,4 +1,4 @@
-import { SystemContext } from "./system-context";
+import { SystemContext, type SearchResult } from "./system-context";
 import { getNextAction } from "./get-next-action";
 import { searchSerper } from "./serper";
 import { bulkCrawlWebsites } from "./server/scraper";
@@ -37,34 +37,29 @@ export async function runAgentLoop(
       if (!nextAction.query) {
         throw new Error("Query is required for search action");
       }
+      // Fetch top 3 results
       const results = await searchSerper(
-        { q: nextAction.query, num: 10 },
+        { q: nextAction.query, num: 3 },
         undefined,
       );
-      ctx.reportQueries([
-        {
-          query: nextAction.query,
-          results: results.organic.map((result) => ({
-            date: result.date || new Date().toISOString(),
-            title: result.title,
-            url: result.link,
-            snippet: result.snippet,
-          })),
-        },
-      ]);
-    } else if (nextAction.type === "scrape") {
-      if (!nextAction.urls) {
-        throw new Error("URLs are required for scrape action");
-      }
-      const results = await bulkCrawlWebsites({ urls: nextAction.urls });
-      if (results.success) {
-        ctx.reportScrapes(
-          results.results.map(({ url, result }) => ({
-            url,
-            result: result.data,
-          })),
-        );
-      }
+      const organicResults = results.organic.slice(0, 3);
+      const searchResultUrls = organicResults.map((result) => result.link);
+      // Scrape all URLs in parallel
+      const scrapeResults = await bulkCrawlWebsites({ urls: searchResultUrls });
+      // Map scraped content to search results
+      const searchResults: SearchResult[] = organicResults.map((result, i) => ({
+        date: result.date || new Date().toISOString(),
+        title: result.title,
+        url: result.link,
+        snippet: result.snippet,
+        scrapedContent: scrapeResults.results[i]?.result.success
+          ? scrapeResults.results[i].result.data
+          : "[Failed to scrape]",
+      }));
+      ctx.reportSearch({
+        query: nextAction.query,
+        results: searchResults,
+      });
     } else if (nextAction.type === "answer") {
       return answerQuestion(ctx, { isFinal: false, ...opts });
     }
