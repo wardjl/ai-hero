@@ -1,6 +1,8 @@
-import { anthropic } from "@ai-sdk/anthropic";
+import { config } from "dotenv";
 import { openai } from "@ai-sdk/openai";
 import { generateText, type LanguageModel } from "ai";
+
+config();
 
 export const ask = async (
   prompt: string,
@@ -16,16 +18,16 @@ export const ask = async (
 
 const prompt = `Tell me a story about your grandmother.`;
 
-const anthropicResult = await ask(
-  prompt,
-  anthropic("claude-3-5-haiku-latest"),
-);
-
-console.log(anthropicResult);
-
+console.log("\n=== GPT-3.5 Response ===\n")
 const openaiResult = await ask(
   prompt,
-  openai("gpt-4o-mini-2024-07-18"),
+  openai("gpt-3.5-turbo"),
 );
+console.log(openaiResult)
 
-console.log(openaiResult);
+console.log("\n=== GPT-4 Mini Response ===\n")
+const openaiResult2 = await ask(
+  prompt,
+  openai("gpt-4o-mini"),
+);
+console.log(openaiResult2)

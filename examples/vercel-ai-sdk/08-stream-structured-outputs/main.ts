@@ -1,8 +1,11 @@
+import { config } from "dotenv";
 import { streamObject } from "ai";
 import { z } from "zod";
 import { smallOpenAiModel } from "../../_shared/models.ts";
 
 const model = smallOpenAiModel;
+config();
+
 
 const schema = z.object({
   recipe: z.object({

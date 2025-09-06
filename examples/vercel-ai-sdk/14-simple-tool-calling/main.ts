@@ -1,7 +1,10 @@
+import { config } from "dotenv";
 import { smallToolCallingModel } from "../../_shared/models.ts";
 import { tool } from "ai";
 import { z } from "zod";
 import { generateText } from "ai";
+
+config();
 
 const model = smallToolCallingModel;
 

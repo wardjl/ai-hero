@@ -1,7 +1,10 @@
+import { config } from "dotenv";
 import { streamText } from "ai";
-import { smallModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
 
-const model = smallModel;
+config();
+
+const model = smallOpenAiModel;
 
 /**
  * Instead of generating the text, we are now streaming it!
@@ -24,5 +27,5 @@ export const answerMyQuestion = async (
 };
 
 await answerMyQuestion(
-  "What is the color of the sun?",
+  "What is the meaning of the name 'Ward'?",
 );

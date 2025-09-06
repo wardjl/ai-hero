@@ -27,6 +27,7 @@
     "dotenv": "^16.4.7",
     "evalite": "0.8.0",
     "express": "^4.21.2",
+    "git": "^0.1.5",
     "hono": "^4.6.17",
     "lucide-react": "^0.474.0",
     "openid-client": "^6.1.7",

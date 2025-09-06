@@ -1,7 +1,10 @@
+import { config } from "dotenv";
 import { generateText } from "ai";
-import { flagshipAnthropicModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
 
-const model = flagshipAnthropicModel;
+config();
+
+const model = smallOpenAiModel;
 
 const systemPrompt =
   `You will receive an image. ` +

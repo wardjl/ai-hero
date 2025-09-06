@@ -1,6 +1,9 @@
+import { config } from "dotenv";
 import { z } from "zod";
 import { generateObject } from "ai";
-import { smallAnthropicModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
+
+config();
 
 const schema = z.object({
   name: z.string().describe("The name of the user"),
@@ -17,7 +20,7 @@ export const createFakeUsers = async (
   input: string,
 ) => {
   const { object } = await generateObject({
-    model: smallAnthropicModel,
+    model: smallOpenAiModel,
     prompt: input,
     system: `You are generating fake user data.`,
     output: "array",

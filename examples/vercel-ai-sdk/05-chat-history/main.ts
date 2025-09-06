@@ -1,5 +1,8 @@
+import { config } from "dotenv";
 import { type CoreMessage } from "ai";
 import { startServer } from "./server.ts";
+
+config();
 
 const messagesToSend: CoreMessage[] = [
   {

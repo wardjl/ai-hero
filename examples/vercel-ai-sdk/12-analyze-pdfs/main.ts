@@ -1,8 +1,11 @@
+import { config } from "dotenv";
 import { z } from "zod";
 import { generateObject } from "ai";
-import { pdfModel as model } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
 import { readFileSync } from "fs";
 import path from "path";
+
+config();
 
 const schema = z
   .object({
@@ -37,7 +40,7 @@ export const extractDataFromInvoice = async (
   invoicePath: string,
 ) => {
   const { object } = await generateObject({
-    model,
+    model: smallOpenAiModel,
     system:
       `You will receive an invoice. ` +
       `Please extract the data from the invoice.`,

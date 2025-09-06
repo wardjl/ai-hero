@@ -1,6 +1,9 @@
+import { config } from "dotenv";
 import { streamText, tool } from "ai";
 import { z } from "zod";
 import { smallToolCallingModel } from "../../_shared/models.ts";
+
+config();
 
 const model = smallToolCallingModel;
 

@@ -5,7 +5,7 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { getLocalhost } from "./utils.ts";
 
 export const pdfModel = cacheModelInFs(
-  anthropic("claude-3-5-sonnet-latest"),
+  anthropic("gpt-4o-mini"),
 );
 
 export const flagshipAnthropicModel = cacheModelInFs(

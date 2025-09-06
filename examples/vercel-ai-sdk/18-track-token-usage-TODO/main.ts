@@ -1,8 +1,11 @@
+import { config } from "dotenv";
 import { generateText } from "ai";
-import { smallModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
+
+config();
 
 const { usage } = await generateText({
-  model: smallModel,
+  model: smallOpenAiModel,
   prompt: "Tell me a story about a dragon.",
 });
 

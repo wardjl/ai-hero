@@ -1,7 +1,9 @@
+import { config } from "dotenv";
 import { generateObject } from "ai";
-import { smallAnthropicModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
 
-const model = smallAnthropicModel;
+const model = smallOpenAiModel;
+config();
 
 export const classifySentiment = async (
   text: string,
@@ -20,7 +22,7 @@ export const classifySentiment = async (
 };
 
 const result = await classifySentiment(
-  `This is terrible`,
+  `pretty good video, you could work on the editing`,
 );
 
 console.log(result); // negative

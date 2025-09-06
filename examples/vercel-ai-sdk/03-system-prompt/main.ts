@@ -1,9 +1,12 @@
+import { config } from "dotenv";
 import { generateText } from "ai";
-import { smallModel } from "../../_shared/models.ts";
+import { smallOpenAiModel } from "../../_shared/models.ts";
 import { readFileSync } from "fs";
 import path from "path";
 
-const model = smallModel;
+config();
+
+const model = smallOpenAiModel;
 
 export const summarizeText = async (input: string) => {
   const { text } = await generateText({
@@ -12,11 +15,11 @@ export const summarizeText = async (input: string) => {
     system:
       `You are a text summarizer. ` +
       `Summarize the text you receive. ` +
-      `Be concise. ` +
+      `Be concise. ` +  
       `Return only the summary. ` +
       `Do not use the phrase "here is a summary". ` +
       `Highlight relevant phrases in bold. ` +
-      `The summary should be two sentences long. `,
+      `The summary should be twenty sentences long. `,
   });
 
   return text;
